@@ -1,0 +1,31 @@
+{
+  "name": "find-ast-objects",
+  "version": "1.0.0",
+  "description": "Find js AST ObjectExpression general purpose helpers. + BEM plugins",
+  "main": "find-ast-objects.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a-x-/find-ast-objects.git"
+  },
+  "keywords": [
+    "ast"
+  ],
+  "author": "invntrm@yandex-team.ru",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/a-x-/find-ast-objects/issues"
+  },
+  "homepage": "https://github.com/a-x-/find-ast-objects#readme",
+  "devDependencies": {
+    "auto-install": "^1.5.0"
+  },
+  "dependencies": {
+    "acorn": "^4.0.0",
+    "estraverse": "^4.2.0",
+    "glob": "^7.0.6",
+    "lodash": "^4.15.0"
+  }
+}
