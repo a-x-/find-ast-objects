@@ -5,7 +5,7 @@
 const _ = require('lodash')
 const findAstObjects = require('../find-ast-objects')
 
-const globPattern = '*/blocks-*/**/*.js'
+const globPattern = process.argv[2] || '*/blocks-*/**/*.js'
 
 const findElemModsWarns = module.exports = function findElemModsWarns(globPattern) {
     findAstObjects(globPattern, node => {
