@@ -4,7 +4,7 @@
 // usage: subl -n $(node find-mods-errors.js)
 
 // todo: add levels: err | warn (mods:mods)
-const findAstObjects = require('./find-ast-objects')
+const findAstObjects = require('../find-ast-objects')
 
 module.exports = function findModsErrors(globPattern, themeDepsBlocks, targetMod) {
     findAstObjects(node => {

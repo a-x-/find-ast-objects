@@ -2,7 +2,7 @@
 // env: VERBOSE
 // usage: VERBOSE=1 node find-elem-mods-warns.js | less
 // usage: subl -n $(node find-elem-mods-warns.js)
-const findAstObjects = require('./find-ast-objects')
+const findAstObjects = require('../find-ast-objects')
 
 const globPattern = '*/blocks-*/**/*.js'
 
