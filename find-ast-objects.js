@@ -11,8 +11,6 @@ const _ = require('lodash')
 const read = name => fs.readFileSync(name, 'utf8')
 const glob = (glob, each) => Glob(glob, (err, files) => files && files.filter(file => file).map(each))
 
-const globPattern = '*/blocks-*/**/*.js'
-
 module.exports = function findTargetAttrsErrors(globPattern, filterNode) {
     glob(globPattern, file => {
         if (file.match(/i18n|deps/)) return
