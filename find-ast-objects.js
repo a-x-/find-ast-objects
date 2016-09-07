@@ -18,6 +18,7 @@ module.exports = function findTargetAttrsErrors(globPattern, filterNode) {
         const code = read(file)
         const ast = acorn.parse(code, {
             locations: true,
+            allowHashBang: true,
         })
 
         estraverse.traverse(ast, {
