@@ -1,4 +1,4 @@
-#!/usr/env node
+#!/usr/bin/env node
 // env: VERBOSE
 // usage: VERBOSE=1 node find-elem-mods-warns.js | less
 // usage: subl -n $(node find-elem-mods-warns.js)

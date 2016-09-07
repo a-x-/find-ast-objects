@@ -1,7 +1,8 @@
-#!/usr/env node
+#!/usr/bin/env node
 // env: VERBOSE
 // usage: VERBOSE=1 node find-elem-mods-warns.js | less
 // usage: subl -n $(node find-elem-mods-warns.js)
+const _ = require('lodash')
 const findAstObjects = require('../find-ast-objects')
 
 const globPattern = '*/blocks-*/**/*.js'
@@ -13,7 +14,7 @@ const targetBlocks = [
 const target = 'target'
 
 const findTargetAttrsErrors = module.exports = function findTargetAttrsErrors(globPattern, targetBlocks, target) {
-    findAstObjects(node => {
+    findAstObjects(globPattern, node => {
         if (!node.properties.filter(p => p.key.name === 'block' && _.includes(targetBlocks, p.value.value)).length) return false
         if (!_(node.properties).map('key.name').includes('attrs')) return false
 
