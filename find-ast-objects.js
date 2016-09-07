@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 // env: VERBOSE
-// usage: VERBOSE=1 node find-elem-mods-warns.js | less
-// usage: subl -n $(node find-elem-mods-warns.js)
+// usage: require('find-ast-objects')('**/*.js', (node) => node.foo === 'bar')
 
 const acorn = require('acorn')
 const fs = require('fs')
