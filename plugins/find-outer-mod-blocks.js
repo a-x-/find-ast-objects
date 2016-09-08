@@ -5,15 +5,8 @@
 
 const globPattern = process.argv[2] || '*/blocks-*/**/*.js'
 const themeDepsBlocks = [
-    'button',
-    'button2',
-    'check-button',
     'link',
-    'radio-button',
-    'radiobox',
-    'tabs',
-    'tumbler',
 ]
-const targetMod = 'theme'
+const targetMod = 'outer'
 
-require('./find-mods-errors')(globPattern, themeDepsBlocks, targetMod, true)
+require('./find-mods-errors')(globPattern, themeDepsBlocks, targetMod, false)

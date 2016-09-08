@@ -7,19 +7,27 @@
 const _ = require('lodash')
 const findAstObjects = require('../find-ast-objects')
 
-module.exports = function findModsErrors(globPattern, themeDepsBlocks, targetMod) {
-    findAstObjects(globPattern, node => {
-        if (!node.properties.filter(p => p.key.name === 'block' && _.includes(themeDepsBlocks, p.value.value)).length) return
-        if (_(node.properties).map('key.name').intersection(['modName', 'elem']).size()) return
-        if (_(node.properties).map('key.name').includes('mods')) {
-            const hasTheme = _.chain(node.properties)
-                .find(['key.name', 'mods'])
-                .get('value.properties')
-                .find(['key.name', targetMod])
-                .value()
+const getMod = (node, mod) => _.chain(node.properties)
+    .find(['key.name', 'mods'])
+    .get('value.properties')
+    .find(['key.name', mod])
+    .value()
 
-            if (hasTheme) return
+module.exports = function findModsErrors(globPattern, themeDepsBlocks, targetMod, mustExist) {
+    findAstObjects(globPattern, node => {
+        if (!node.properties.filter(p => p.key.name === 'block' && _.includes(themeDepsBlocks, p.value.value)).length) return false
+        if (_(node.properties).map('key.name').intersection(['modName', 'elem']).size()) return false
+
+        const hasMods = Boolean(_(node.properties).map('key.name').includes('mods'))
+        const hasMod = hasMods && Boolean(getMod(node, targetMod))
+
+        // Если искомый модификатор присутствует и это ожидаемо,
+        // то ошибки нет, не нужно об этом случае репортить
+        if (mustExist) {
+            return !hasMods || !hasMod // true — слуай найден, нужен репорт
         }
-        return true
+        if (!mustExist) {
+            return hasMod
+        }
     })
 }

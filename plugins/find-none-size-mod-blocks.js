@@ -11,4 +11,4 @@ const themeDepsBlocks = [
 ]
 const targetMod = 'size'
 
-require('./find-mods-errors')(globPattern, themeDepsBlocks, targetMod)
+require('./find-mods-errors')(globPattern, themeDepsBlocks, targetMod, true)
