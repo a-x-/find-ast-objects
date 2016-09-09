@@ -8,6 +8,7 @@ const themeDepsBlocks = [
     'button',
     'button2',
     'radiobox',
+    'check-button',
 ]
 const targetMod = 'size'
 
