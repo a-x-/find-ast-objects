@@ -4,7 +4,6 @@
 // usage: VERBOSE=1 node find-mods-errors.js | less
 // usage: subl -n $(node find-mods-errors.js)
 
-// todo: add levels: err | warn (mods:mods)
 const _ = require('lodash')
 const findAstObjects = require('../find-ast-objects')
 
