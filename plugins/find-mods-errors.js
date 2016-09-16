@@ -37,7 +37,7 @@ module.exports = function findModsErrors(globPattern, themeDepsBlocks, targetMod
         // console.log('wtf', hasKnownMods);
         const hasMod = hasMods && hasKnownMods && Boolean(getMod(node, targetMod))
 
-        if (!hasKnownMods) return isWarnLevel
+        if (hasMods && !hasKnownMods) return isWarnLevel
 
         // Если искомый модификатор присутствует и это ожидаемо,
         // то ошибки нет, не нужно об этом случае репортить
