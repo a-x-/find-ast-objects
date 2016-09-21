@@ -1,5 +1,5 @@
 const findAttrsErrors = require('find-attrs-errors.js')
-const target = 'target'
+const targetFields = 'title'
 const targetBlocks = [
     'button',
     'button2',
