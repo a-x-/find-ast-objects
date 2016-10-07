@@ -4,7 +4,7 @@
   "description": "Find js AST ObjectExpression general purpose helpers. + BEM plugins",
   "main": "find-ast-objects.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node plugins/tests.js"
   },
   "repository": {
     "type": "git",
