@@ -20,14 +20,17 @@
   },
   "homepage": "https://github.com/a-x-/find-ast-objects#readme",
   "devDependencies": {
-    "auto-install": "^1.5.0",
-    "sinon": "^1.17.6"
+    "sinon": "^1.17.6",
+    "assert": "^0.2.0",
+    "mocha": "^2.4.5"
   },
   "dependencies": {
     "acorn": "^4.0.0",
-    "chalk": "^1.1.3",
     "estraverse": "https://github.com/a-x-/estraverse.git#patch-1",
     "glob": "^7.0.6",
     "lodash": "^4.15.0"
+  },
+  "bin": {
+    "fa": "bin/fa.js"
   }
 }
