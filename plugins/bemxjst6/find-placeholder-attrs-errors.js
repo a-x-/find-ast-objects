@@ -14,7 +14,7 @@ const hasAttr = new HasAttr(targetBlocks, target)
 const hasElem = new HasElemError(target)
 
 module.exports = function findPlaceholderErrors () {
-    reutrn node => {
+    return node => {
         if (hasAttr(node) || hasElem(node)) return true
     }
 }

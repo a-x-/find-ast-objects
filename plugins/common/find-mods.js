@@ -1,4 +1,5 @@
 const _ = require('lodash')
+const getBlockName = require('./block-name')
 
 const getMod = (node, mod) => _.chain(node.properties)
     .find(['key.name', 'mods'])
@@ -11,12 +12,10 @@ const isModsPlainObject = node => _.chain(node.properties)
     .get('value.type')
     .value() === 'ObjectExpression'
 
-const getBlockName = node => _(node.properties).filter(p => p.key.name === 'block').get(`0.value.value`)
-
-module.exports = function findModsErrors(themeDepsBlocks, targetMod, mustExist, level) {
+module.exports = function findModsErrors(targetBlocks, targetMod, mustExist, level) {
     const isWarnLevel = level === undefined ? true : level === 'warn'
     return node => {
-        if (!_.includes(themeDepsBlocks, getBlockName(node))) return false
+        if (!_.includes(targetBlocks, getBlockName(node))) return false
         if (_(node.properties).map('key.name').includes('modName')) return false
         // {block, mods, elem} — элемент явно модифицированного блока — нужно проверять
         // {block, elem}       — элемент блока, не имеющего модификаторов — не нужно проверять

@@ -1,0 +1,4 @@
+({
+    block: 'input',
+    placeholder: 'placeholder...'
+})
