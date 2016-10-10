@@ -4,7 +4,7 @@
   "description": "Find js AST ObjectExpression general purpose helpers. + BEM plugins",
   "main": "find-ast-objects.js",
   "scripts": {
-    "test": "node plugins/tests.js"
+    "test": "mocha plugins/tests.js"
   },
   "repository": {
     "type": "git",
@@ -20,12 +20,13 @@
   },
   "homepage": "https://github.com/a-x-/find-ast-objects#readme",
   "devDependencies": {
-    "auto-install": "^1.5.0"
+    "auto-install": "^1.5.0",
+    "sinon": "^1.17.6"
   },
   "dependencies": {
     "acorn": "^4.0.0",
     "chalk": "^1.1.3",
-    "estraverse": "^4.2.0",
+    "estraverse": "https://github.com/a-x-/estraverse.git#patch-1",
     "glob": "^7.0.6",
     "lodash": "^4.15.0"
   }

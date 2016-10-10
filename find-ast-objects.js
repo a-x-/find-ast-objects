@@ -4,14 +4,16 @@
 
 const acorn = require('acorn')
 const fs = require('fs')
-const Glob = require('glob')
 const estraverse = require('estraverse')
 const _ = require('lodash')
 const read = name => fs.readFileSync(name, 'utf8')
-const glob = (glob, each) => Glob(glob, (err, files) => files && files.filter(file => file).map(each))
+const astMap = require('./common/ast-map')
+const globMap = require('./common/glob-map')
 
-module.exports = function findTargetAttrsErrors(globPattern, filterNode) {
-    glob(globPattern, file => {
+module.exports = function findAstObjects(globPattern, filterNode) {
+    // console.log('Promise', Promise.all);
+    return globMap(globPattern, file => {
+        // console.log('file', file); // todo tmp
         if (file.match(/i18n|deps/)) return
 
         const code = read(file)
@@ -20,17 +22,18 @@ module.exports = function findTargetAttrsErrors(globPattern, filterNode) {
             allowHashBang: true,
         })
 
-        estraverse.traverse(ast, {
-            enter: (node, parent) => {
-                if (node.type !== 'ObjectExpression') return
-                if (!filterNode(node)) return
+        return astMap(ast, (node, parent) => {
+            if (node.type !== 'ObjectExpression') return
+            if (!filterNode(node)) return
 
-                // catch it!
-                console.log(`${file}:${node.loc.start.line}`)
-                const from = node.loc.start.line - 1
-                const to = node.loc.end.line
-                process.env.VERBOSE && console.log(code.split(/\n/).slice(from, to).join('\n'))
-            }
+            // catch it!
+            const from = node.loc.start.line
+            const to = node.loc.end.line
+            const snippet = code.split(/\n/).slice(from - 1, to).join('\n')
+            process.env.VERBOSE && console.log(`${file}:${from}`)
+            process.env.VERBOSE > 1 && console.log(snippet)
+            return {snippet: snippet, from: from, to: to, node: node, ast: ast, code: code, file: file}
         })
     })
+    .then(occurences => Promise.all(occurences))
 }

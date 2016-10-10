@@ -1,45 +1,21 @@
-const assert = require('assert');
-const color = require('chalk');
-const parse = require('acorn');
-const _ = require('lodash');
-const childProcess = require('child_process')
+const test = require('./common/test')
+const partial = require('lodash/partial')
 
-function debug(message) {
-    var log = console.log.bind(console, color.blue('debug> ') + message);
-    log.apply(null, Array.from(arguments).splice(1))
-}
+describe('plugins', () => {
+    describe('mods', () => {
+        describe('theme', () => {
+            const testTheme = partial(test, require('./v2/find-none-theme-mod-blocks'))
 
-/*
-_________ _______  _______ _________ _______
-\__   __/(  ____ \(  ____ \\__   __/(  ____ \
-   ) (   | (    \/| (    \/   ) (   | (    \/
-   | |   | (__    | (_____    | |   | (_____
-   | |   |  __)   (_____  )   | |   (_____  )
-   | |   | (            ) |   | |         ) |
-   | |   | (____/\/\____) |   | |   /\____) |
-   )_(   (_______/\_______)   )_(   \_______)
-*/
-
-function test(plugin, file, expectedResult) {
-    console.log('run test ' + plugin + ' for file', color.black.bold(file))
-    var output = childProcess.execSync(`${plugin} ${__dirname}/${file}`, {encoding:'utf8'})
-    console.log('output:', output)
-    assert.ok(expectedResult === Boolean(output.trim()), (expectedResult ? 'cases are catched' : 'cases are not found' + '. Test:' + plugin + ' ' + file))
-}
-
-console.log(color.green('Run tests...'))
-
-Promise.resolve()
-.then(()=>test(`node ${__dirname}/test-assets/check-tests.js`, '', true))
-.then(()=>test('find-none-theme-mod-blocks.js', 'test-assets/theme.1.js', true))
-.then(()=>test('find-none-theme-mod-blocks.js', 'test-assets/theme.2.js', true))
-.then(()=>test('find-none-theme-mod-blocks.js', 'test-assets/theme.3.js', false))
-.then(()=>test('find-none-theme-mod-blocks.js', 'test-assets/theme.4.js', false))
-.then(()=>test('find-none-theme-mod-blocks.js', 'test-assets/theme.5.js', true))
-.then(()=>test('LEVEL=error find-none-theme-mod-blocks.js', 'test-assets/theme.5.js', false))
-.then(()=>test('find-none-theme-mod-blocks.js', 'test-assets/theme.6.js', true))
-.then(()=>test('find-none-theme-mod-blocks.js', 'test-assets/theme.7.js', false))
-.then(()=>test('find-none-theme-mod-blocks.js', 'test-assets/theme.8.js', false))
-.then(()=>test('find-none-theme-mod-blocks.js', 'test-assets/theme.9.js', false))
-.then(()=>debug(color.green('OK: All tests passed!')))
-.catch(e=>debug(color.red('err>'), e))
+            it('empty mods', () => testTheme('theme.01.js', {}, true))
+            it('w/o mods', () => testTheme('theme.02.js', {}, true))
+            it('with theme', () => testTheme('theme.03.js', {}, false))
+            it('not target object', () => testTheme('theme.04.js', {}, false))
+            it('mods variable', () => testTheme('theme.05.js', {}, true))
+            it('mods variable strict', () => testTheme('theme.05.js', {level: 'error'}, false))
+            it('block mods elem', () => testTheme('theme.06.js', {}, true))
+            it('block elem', () => testTheme('theme.07.js', {}, false))
+            it('block mods with theme elem', () => testTheme('theme.08.js', {}, false))
+            it('elem mods', () => testTheme('theme.09.js', {}, false))
+        })
+    })
+})
