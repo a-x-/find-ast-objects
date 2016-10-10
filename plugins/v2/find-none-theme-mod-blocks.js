@@ -10,4 +10,4 @@ const themeDepsBlocks = [
 ]
 const targetMod = 'theme'
 
-module.exports = level => require('./common/find-mods-errors')(themeDepsBlocks, targetMod, true, level)
+module.exports = level => require('../common/find-mods-errors')(themeDepsBlocks, targetMod, true, level)
