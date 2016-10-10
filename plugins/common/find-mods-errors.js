@@ -13,7 +13,7 @@ const isModsPlainObject = node => _.chain(node.properties)
 
 module.exports = function findModsErrors(themeDepsBlocks, targetMod, mustExist, level) {
     const isWarnLevel = level === undefined ? true : level === 'warn'
-    reutrn node => {
+    return node => {
         if (!node.properties.filter(_.includes(themeDepsBlocks, p.value.value)).length) return false
         if (_(node.properties).map('key.name').includes('modName')) return false
         // {block, elem, mods} — элемент явно модифицированного блока — нужно проверять
@@ -22,19 +22,14 @@ module.exports = function findModsErrors(themeDepsBlocks, targetMod, mustExist, 
         // {block}             — блок без модификаторов — нужно проверять
         if (_(node.properties).map('key.name').includes('elem') && !_(node.properties).map('key.name').includes('mods')) return false
 
-        const hasMods = Boolean(_(node.properties).map('key.name').includes('mods'))
+        const hasModsObj = Boolean(_(node.properties).map('key.name').includes('mods'))
         const hasKnownMods = isModsPlainObject(node)
-        const hasMod = hasMods && hasKnownMods && Boolean(getMod(node, targetMod))
+        const hasMod = hasModsObj && hasKnownMods && Boolean(getMod(node, targetMod))
 
-        if (hasMods && !hasKnownMods) return isWarnLevel
+        if (hasModsObj && !hasKnownMods) return isWarnLevel
 
         // Если искомый модификатор присутствует и это ожидаемо,
         // то ошибки нет, не нужно об этом случае репортить
-        if (mustExist) {
-            return !hasMods || !hasMod // true — слуай найден, нужен репорт
-        }
-        if (!mustExist) {
-            return hasMod
-        }
+        return mustExist !== hasMod // true — слуай найден, нужен репорт
     }
 }
