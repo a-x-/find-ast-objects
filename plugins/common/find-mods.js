@@ -14,6 +14,8 @@ const isModsPlainObject = node => _.chain(node.properties)
 
 module.exports = function findModsErrors(targetBlocks, targetMod, mustExist, level) {
     const isWarnLevel = level === undefined ? true : level === 'warn'
+    // @param {AcornESTreeNode} node
+    // @see estree spec https://github.com/estree/estree
     return node => {
         if (!_.includes(targetBlocks, getBlockName(node))) return false
         if (_(node.properties).map('key.name').includes('modName')) return false
