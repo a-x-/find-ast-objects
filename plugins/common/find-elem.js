@@ -2,6 +2,8 @@ const _ = require('lodash')
 const normalizeAstProperties = require('./ast-array-object-normalize')
 
 module.exports = function findElem(target) {
+    // @param {AcornESTreeNode} node
+    // @see estree spec https://github.com/estree/estree
     return node => {
         if (!_(node.properties).map('key.name').includes('content')) return false
 
